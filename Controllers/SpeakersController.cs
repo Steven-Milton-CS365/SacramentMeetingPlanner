@@ -22,7 +22,7 @@ namespace SacramentMeetingPlanner.Controllers
         // GET: Speakers
         public async Task<IActionResult> Index()
         {
-            var meetingContext = _context.Speakers.Include(s => s.Meeting).Include(s => s.Member);
+            var meetingContext = _context.Speakers.Include(s => s.Meeting);
             return View(await meetingContext.ToListAsync());
         }
 
@@ -36,7 +36,6 @@ namespace SacramentMeetingPlanner.Controllers
 
             var speaker = await _context.Speakers
                 .Include(s => s.Meeting)
-                .Include(s => s.Member)
                 .FirstOrDefaultAsync(m => m.SpeakerID == id);
             if (speaker == null)
             {
@@ -50,7 +49,6 @@ namespace SacramentMeetingPlanner.Controllers
         public IActionResult Create()
         {
             ViewData["MeetingID"] = new SelectList(_context.Meetings, "ID", "ID");
-            ViewData["MemberID"] = new SelectList(_context.Members, "MemberID", "MemberID");
             return View();
         }
 
@@ -59,7 +57,7 @@ namespace SacramentMeetingPlanner.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("SpeakerID,MeetingID,MemberID,Topic")] Speaker speaker)
+        public async Task<IActionResult> Create([Bind("SpeakerID,MeetingID,SpeakerName,Topic")] Speaker speaker)
         {
             if (ModelState.IsValid)
             {
@@ -68,7 +66,6 @@ namespace SacramentMeetingPlanner.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["MeetingID"] = new SelectList(_context.Meetings, "ID", "ID", speaker.MeetingID);
-            ViewData["MemberID"] = new SelectList(_context.Members, "MemberID", "MemberID", speaker.MemberID);
             return View(speaker);
         }
 
@@ -86,7 +83,6 @@ namespace SacramentMeetingPlanner.Controllers
                 return NotFound();
             }
             ViewData["MeetingID"] = new SelectList(_context.Meetings, "ID", "ID", speaker.MeetingID);
-            ViewData["MemberID"] = new SelectList(_context.Members, "MemberID", "MemberID", speaker.MemberID);
             return View(speaker);
         }
 
@@ -95,7 +91,7 @@ namespace SacramentMeetingPlanner.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("SpeakerID,MeetingID,MemberID,Topic")] Speaker speaker)
+        public async Task<IActionResult> Edit(int id, [Bind("SpeakerID,MeetingID,SpeakerName,Topic")] Speaker speaker)
         {
             if (id != speaker.SpeakerID)
             {
@@ -123,7 +119,6 @@ namespace SacramentMeetingPlanner.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["MeetingID"] = new SelectList(_context.Meetings, "ID", "ID", speaker.MeetingID);
-            ViewData["MemberID"] = new SelectList(_context.Members, "MemberID", "MemberID", speaker.MemberID);
             return View(speaker);
         }
 
@@ -137,7 +132,6 @@ namespace SacramentMeetingPlanner.Controllers
 
             var speaker = await _context.Speakers
                 .Include(s => s.Meeting)
-                .Include(s => s.Member)
                 .FirstOrDefaultAsync(m => m.SpeakerID == id);
             if (speaker == null)
             {
