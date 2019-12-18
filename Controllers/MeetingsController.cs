@@ -34,7 +34,11 @@ namespace SacramentMeetingPlanner.Controllers
             }
 
             var meeting = await _context.Meetings
+                .Include(s => s.Speakers)
+                .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.ID == id);
+
+
             if (meeting == null)
             {
                 return NotFound();
