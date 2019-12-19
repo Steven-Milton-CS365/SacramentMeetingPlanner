@@ -11,23 +11,43 @@ namespace SacramentMeetingPlanner.Models
     {
         public int ID { get; set; }
 
+        [Required]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        [Column("Meeting Date")]
+        [Display(Name ="Meeting Date")]
         public DateTime MeetingDate { get; set; }
+
+        [Required]
+        [StringLength(60, MinimumLength = 3)]
         public string Conductor { get; set; }
-        [Column("Opening Hymn")]
+
+        [Required]
+        [StringLength(60, MinimumLength = 3)]
+        [Display(Name="Opening Hymn")]
         public string OpeningHymn { get; set; }
-        [Column("Sacrament Hymn")]
-        public string OpeningPrayer { get; set; }
+
+        [Required]
+        [StringLength(60, MinimumLength = 3)]
+        [Display(Name = "Sacrament Hymn")]
         public string SacramentHymn { get; set; }
-        [Column("Intermediate Hymn")]
-        [StringLengthAttribute(75)]
+
+        [Required]
+        [Display(Name="Invocation")]
+        [StringLength(60, MinimumLength = 3)]
+        public string OpeningPrayer { get; set; }
+
+        [StringLength(60, MinimumLength = 3)]
+        [Display(Name = "Intermediate Hymn")]
         public string IntermediateHymn { get; set; }
-        [Column("Closing Hymn")]
+
+        [Required]
+        [StringLength(60, MinimumLength = 3)]
+        [Display(Name = "Closing Hymn")]
         public string ClosingHymn { get; set; }
-        [Column("Closing Prayer")]
-        
+
+        [Required]
+        [StringLength(60, MinimumLength = 3)]
+        [Display(Name = "Benediction")]
         public string ClosingPrayer { get; set; }
         public ICollection<Speaker> Speakers { get; set; }
     }
