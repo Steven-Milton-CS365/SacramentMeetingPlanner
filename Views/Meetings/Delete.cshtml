@@ -63,7 +63,7 @@
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="ID" />
-        <button type="submit" class="btn btn-danger btn-lg icon-xlg fa fa-trash" ></button>
-        <a class="btn btn-info btn-lg icon-xlg fa fa-list" asp-action="Index"></a>
+        <button type="submit" class="btn btn-danger btn-lg icon-xlg fa fa-trash" data-toggle="tooltip" title="Delete Meeting Record" ></button>
+        <a class="btn btn-info btn-lg icon-xlg fa fa-list" data-toggle="tooltip" title="Back to Meeting List" asp-action="Index"></a>
     </form>
 </div>
