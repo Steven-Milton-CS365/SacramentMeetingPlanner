@@ -1,77 +1,108 @@
-﻿@model IEnumerable<SacramentMeetingPlanner.Models.Meeting>
+﻿@model PaginatedList<SacramentMeetingPlanner.Models.Meeting>
 
 @{
     ViewData["Title"] = "Sacrament Meeting List";
 }
 
-    <h2 style="font-family: 'Adamina', serif;">Meeting List</h2>
+<h2 style="font-family: 'Adamina', serif;">Meeting List</h2>
 
 <p>
     <a class="btn btn-success icon-lg" asp-action="Create">Create New</a>
 </p>
+
+<form asp-controller="Meetings" asp-action="Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            <input type="text" name="SearchString" placeholder="find by name" value="@ViewData["currentFilter"]" />
+            <button data-toggle="tooltip" title="Search for name" type="submit" class="btn btn-primary fa fa-search"></button>&nbsp;
+            <a data-toggle="tooltip" title="Back to Full List" class="btn btn-secondary fa fa-list" asp-action="Index"></a>
+        </p>
+    </div>
+</form>
+
 <table class="table table-hover table-active">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.MeetingDate)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Meeting Date</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Conductor)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Conducting</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.OpeningHymn)
+                Opening Hymn
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.OpeningPrayer)
+                Invocation
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.SacramentHymn)
+                Sacrament Hymn
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IntermediateHymn)
+                Intermediate Item
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ClosingHymn)
+                Closing Hymn
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ClosingPrayer)
+                Benediction
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.MeetingDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Conductor)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OpeningHymn)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OpeningPrayer)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SacramentHymn)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IntermediateHymn)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ClosingHymn)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ClosingPrayer)
-            </td>
-            <td>
-                <a class="btn btn-primary btn-block fa fa-edit" data-toggle="tooltip" title="Edit Meeting Record" asp-action="Edit" asp-route-id="@item.ID"></a>
-                <a class="btn btn-secondary btn-block fa fa-list" data-toggle="tooltip" title="Display Meeting Details" asp-action="Details" asp-route-id="@item.ID"></a>
-                <a class="btn btn-danger btn-block fa fa-trash" data-toggle="tooltip" title="Delete Meeting" asp-action="Delete" asp-route-id="@item.ID"></a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MeetingDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Conductor)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OpeningHymn)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OpeningPrayer)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SacramentHymn)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IntermediateHymn)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ClosingHymn)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ClosingPrayer)
+                </td>
+                <td>
+                    <a class="btn btn-primary btn-block fa fa-edit" data-toggle="tooltip" title="Edit Meeting Record" asp-action="Edit" asp-route-id="@item.ID"></a>
+                    <a class="btn btn-secondary btn-block fa fa-list" data-toggle="tooltip" title="Display Meeting Details" asp-action="Details" asp-route-id="@item.ID"></a>
+                    <a class="btn btn-danger btn-block fa fa-trash" data-toggle="tooltip" title="Delete Meeting" asp-action="Delete" asp-route-id="@item.ID"></a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex - 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-primary icon-xlg fa fa-chevron-left @prevDisabled" data-toggle="tooltip" title="Goto Previous Page">
+</a>
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex + 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-primary icon-xlg fa fa-chevron-right  @nextDisabled" data-toggle="tooltip" title="Goto Next Page">
+</a>
+ 

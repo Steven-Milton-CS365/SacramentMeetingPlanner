@@ -20,9 +20,52 @@ namespace SacramentMeetingPlanner.Controllers
         }
 
         // GET: Meetings
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(
+            string sortOrder,
+            string currentFilter,
+            string searchString,
+            int? pageNumber)
         {
-            return View(await _context.Meetings.ToListAsync());
+            ViewData["SurrentSort"] = sortOrder;
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
+
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewData["CurrentFilter"] = searchString;
+            var meetings = from m in _context.Meetings select m;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                meetings = meetings.Where(s => s.Conductor.Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    meetings = meetings.OrderByDescending(s => s.Conductor);
+                    break;
+                case "Date":
+                    meetings = meetings.OrderBy(s => s.MeetingDate);
+                    break;
+                case "date_desc":
+                    meetings = meetings.OrderByDescending(s => s.MeetingDate);
+                    break;
+                default:
+                    meetings = meetings.OrderBy(s => s.Conductor);
+                    break;
+            }
+
+            int pageSize = 3;
+            //return View(await _context.Meetings.ToListAsync());
+            return View(await PaginatedList<Meeting>.CreateAsync(meetings.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
         // GET: Meetings/Details/5
@@ -44,6 +87,8 @@ namespace SacramentMeetingPlanner.Controllers
                 return NotFound();
             }
 
+            ViewData["MeetingID"] = id.Value;
+
             return View(meeting);
         }
 
@@ -60,11 +105,21 @@ namespace SacramentMeetingPlanner.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ID,MeetingDate,Conductor,OpeningHymn,OpeningPrayer,SacramentHymn,IntermediateHymn,ClosingHymn,ClosingPrayer")] Meeting meeting)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _context.Add(meeting);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    _context.Add(meeting);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+            catch (DbUpdateException /* ex */)
+            {
+                //Log the error (uncomment ex variable name and write a log.
+                ModelState.AddModelError("", "Unable to save changes. " +
+                                             "Try again, and if the problem persists " +
+                                             "see your system administrator.");
             }
             return View(meeting);
         }
