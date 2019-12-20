@@ -1,15 +1,15 @@
 ﻿@model IEnumerable<SacramentMeetingPlanner.Models.Meeting>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Sacrament Meeting List";
 }
 
-<h1>Index</h1>
+    <h1>Meeting List</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a class="btn btn-success icon-lg" asp-action="Create">Create New</a>
 </p>
-<table class="table">
+<table class="table table-hover table-active">
     <thead>
         <tr>
             <th>
@@ -67,9 +67,9 @@
                 @Html.DisplayFor(modelItem => item.ClosingPrayer)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                <a class="btn btn-primary btn-block fa fa-edit" data-toggle="tooltip" title="Edit Meeting Record" asp-action="Edit" asp-route-id="@item.ID"></a>
+                <a class="btn btn-secondary btn-block fa fa-list" data-toggle="tooltip" title="Display Meeting Details" asp-action="Details" asp-route-id="@item.ID"></a>
+                <a class="btn btn-danger btn-block fa fa-trash" data-toggle="tooltip" title="Delete Meeting" asp-action="Delete" asp-route-id="@item.ID"></a>
             </td>
         </tr>
 }

@@ -4,11 +4,11 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
-<a href="javascript:window.print()">Print</a>
+<h2>Sacrament Meeting Details</h2>
+<a class="btn btn-lg btn-success icon-lg "href="javascript:window.print()">Print Sacrament Program</a>
 
 <div>
-    <h4>Meeting</h4>
+    @*<h4>Meeting</h4>*@
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
@@ -98,6 +98,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.ID">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a class="btn btn-primary btn-lg icon-xlg fa fa-edit"asp-action="Edit" asp-route-id="@Model.ID"></a>&nbsp&nbsp;
+    <a class="btn btn-secondary btn-lg icon-xlg fa fa-list"asp-action="Index"></a>
 </div>

@@ -7,6 +7,31 @@ a.navbar-brand {
   word-break: break-all;
 }
 
+nav li a:hover {
+    border-bottom: 2px solid #ccc;
+}
+
+.active {
+    border-bottom: 2px solid #ccc;
+}
+
+.icon-lg {
+    font-size: 16px;
+}
+
+.icon-xlg {
+    font-size: 22px;
+}
+
+.padding {
+    padding-top: 20px;
+}
+
+.logo {
+    width: 50px;
+    height: auto;
+}
+
 /* Sticky footer styles
 -------------------------------------------------- */
 html {

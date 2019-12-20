@@ -4,12 +4,12 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h2>Speaker List</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a class="btn btn-success icon-lg" asp-action="Create">Create New</a>
 </p>
-<table class="table">
+<table class="table table-hover table-active">
     <thead>
         <tr>
             <th>
@@ -37,9 +37,9 @@
                 @Html.DisplayFor(modelItem => item.Meeting.ID)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.SpeakerID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.SpeakerID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.SpeakerID">Delete</a>
+                <a class="btn btn-primary fa fa-edit" data-toggle="tooltip" title="Edit Speaker Record" asp-action="Edit" asp-route-id="@item.SpeakerID"></a>
+                <a class="btn btn-secondary fa fa-list" data-toggle="tooltip" title="Display Speaker Details" asp-action="Details" asp-route-id="@item.SpeakerID"></a>
+                <a class="btn btn-danger fa fa-trash" data-toggle="tooltip" title="Delete Speaker Record" asp-action="Delete" asp-route-id="@item.SpeakerID"></a>
             </td>
         </tr>
 }

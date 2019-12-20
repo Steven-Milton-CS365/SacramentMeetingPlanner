@@ -31,6 +31,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.SpeakerID">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a class="btn btn-primary btn-lg fa fa-edit icon-xlg"data-toggle="tooltip" title="Edit Speaker Details" asp-action="Edit" asp-route-id="@Model.SpeakerID"></a>
+    <a class="btn btn-info btn-lg icon-xlg fa fa-list" data-toggle="tooltip" title="Back to Speaker List" asp-action="Index"></a>
 </div>
