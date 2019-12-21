@@ -27,14 +27,14 @@ namespace SacramentMeetingPlanner.Models
         public string OpeningHymn { get; set; }
 
         [Required]
+        [Display(Name = "Invocation")]
+        [StringLength(60, MinimumLength = 3)]
+        public string OpeningPrayer { get; set; }
+
+        [Required]
         [StringLength(60, MinimumLength = 3)]
         [Display(Name = "Sacrament Hymn")]
         public string SacramentHymn { get; set; }
-
-        [Required]
-        [Display(Name="Invocation")]
-        [StringLength(60, MinimumLength = 3)]
-        public string OpeningPrayer { get; set; }
 
         [StringLength(60, MinimumLength = 3)]
         [Display(Name = "Intermediate Hymn")]
