@@ -26,7 +26,7 @@ namespace SacramentMeetingPlanner.Controllers
             string searchString,
             int? pageNumber)
         {
-            ViewData["SurrentSort"] = sortOrder;
+            ViewData["CurrentSort"] = sortOrder;
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
 
